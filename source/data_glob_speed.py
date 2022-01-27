@@ -16,7 +16,7 @@ class GlobSpeedSequence(CompiledSequence):
     Dataset :- RoNIN (can be downloaded from http://ronin.cs.sfu.ca/)
     Features :- raw angular rate and acceleration (includes gravity).
     """
-    feature_dim = 6
+    feature_dim = 9 # glob_gyro, glob_acce, glob_magn
     target_dim = 2
     aux_dim = 8
 
@@ -45,6 +45,7 @@ class GlobSpeedSequence(CompiledSequence):
         with h5py.File(osp.join(data_path, 'data.hdf5')) as f:
             gyro_uncalib = f['synced/gyro_uncalib']
             acce_uncalib = f['synced/acce']
+            magn = f['synced/magnet']
             gyro = gyro_uncalib - np.array(self.info['imu_init_gyro_bias'])
             acce = np.array(self.info['imu_acce_scale']) * (acce_uncalib - np.array(self.info['imu_acce_bias']))
             ts = np.copy(f['synced/time'])
@@ -62,12 +63,14 @@ class GlobSpeedSequence(CompiledSequence):
 
         gyro_q = quaternion.from_float_array(np.concatenate([np.zeros([gyro.shape[0], 1]), gyro], axis=1))
         acce_q = quaternion.from_float_array(np.concatenate([np.zeros([acce.shape[0], 1]), acce], axis=1))
+        magn_q = quaternion.from_float_array(np.concatenate([np.zeros([magn.shape[0], 1]), magn], axis=1))
         glob_gyro = quaternion.as_float_array(ori_q * gyro_q * ori_q.conj())[:, 1:]
         glob_acce = quaternion.as_float_array(ori_q * acce_q * ori_q.conj())[:, 1:]
+        glob_magn = quaternion.as_float_array(ori_q * magn_q * ori_q.conj())[:, 1:]
 
         start_frame = self.info.get('start_frame', 0)
         self.ts = ts[start_frame:]
-        self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
+        self.features = np.concatenate([glob_gyro, glob_acce, glob_magn], axis=1)[start_frame:]
         self.targets = glob_v[start_frame:, :2]
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
