@@ -45,7 +45,9 @@ class GlobSpeedSequence(CompiledSequence):
         with h5py.File(osp.join(data_path, 'data.hdf5')) as f:
             gyro_uncalib = f['synced/gyro_uncalib']
             acce_uncalib = f['synced/acce']
-            magn = f['synced/magnet']
+            # System automatically updates magnetometer biases during calibration
+            # See supplementary material in https://arxiv.org/pdf/1905.12853.pdf for details on calibration
+            magn = np.array(f['synced/magnet'])
             gyro = gyro_uncalib - np.array(self.info['imu_init_gyro_bias'])
             acce = np.array(self.info['imu_acce_scale']) * (acce_uncalib - np.array(self.info['imu_acce_bias']))
             ts = np.copy(f['synced/time'])
