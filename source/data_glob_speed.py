@@ -16,7 +16,7 @@ class GlobSpeedSequence(CompiledSequence):
     Dataset :- RoNIN (can be downloaded from http://ronin.cs.sfu.ca/)
     Features :- raw angular rate and acceleration (includes gravity).
     """
-    feature_dim = 6 # glob_gyro, glob_acce, glob_magn
+    feature_dim = 4
     target_dim = 2
     aux_dim = 8
 
@@ -76,8 +76,10 @@ class GlobSpeedSequence(CompiledSequence):
         self.ts = ts[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce, glob_magn], axis=1)[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
-        self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
-        self.targets = glob_v[start_frame:, :2]
+        #self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
+        self.features = np.concatenate([magn], axis=1)[start_frame:]
+        #self.targets = glob_v[start_frame:, :2]
+        self.targets = quaternion.as_float_array(ori_q)[start_frame:]
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
 
