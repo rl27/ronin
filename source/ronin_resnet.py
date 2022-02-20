@@ -16,7 +16,7 @@ from transformations import *
 from metric import compute_ate_rte
 from model_resnet1d import *
 
-_input_channel, _output_channel = 4, 2
+_input_channel, _output_channel = 3, 4
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
 
 

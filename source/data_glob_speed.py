@@ -16,8 +16,8 @@ class GlobSpeedSequence(CompiledSequence):
     Dataset :- RoNIN (can be downloaded from http://ronin.cs.sfu.ca/)
     Features :- raw angular rate and acceleration (includes gravity).
     """
-    feature_dim = 4
-    target_dim = 2
+    feature_dim = 3
+    target_dim = 4
     aux_dim = 8
 
     def __init__(self, data_path=None, **kwargs):
