@@ -82,7 +82,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
         seq_type = RIDIGlobSpeedSequence
     dataset = StridedSequenceDataset(
         seq_type, root_dir, data_list, args.cache_path, args.step_size, args.window_size,
-        random_shift=random_shift, transform=transforms,
+        random_shift=random_shift, transform=None,
         shuffle=shuffle, grv_only=grv_only, max_ori_error=args.max_ori_error)
 
     global _input_channel, _output_channel
