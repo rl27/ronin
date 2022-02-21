@@ -73,7 +73,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
         shuffle = True
     elif mode == 'test':
         shuffle = False
-        grv_only = True
+        #grv_only = True
 
     if args.dataset == 'ronin':
         seq_type = GlobSpeedSequence
