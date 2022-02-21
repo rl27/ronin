@@ -323,6 +323,7 @@ def test_sequence(args):
 
         print('Sequence {}, loss {} / {}, ate {:.6f}, rte {:.6f}'.format(data, losses, np.mean(losses), ate, rte))
 
+        '''
         # Plot figures
         kp = preds.shape[1]
         if kp == 2:
@@ -357,6 +358,7 @@ def test_sequence(args):
             plt.savefig(osp.join(args.out_dir, data + '_gsn.png'))
 
         plt.close('all')
+        '''
 
     losses_seq = np.stack(losses_seq, axis=0)
     losses_avg = np.mean(losses_seq, axis=1)
