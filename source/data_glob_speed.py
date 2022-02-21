@@ -52,6 +52,7 @@ class GlobSpeedSequence(CompiledSequence):
             acce = np.array(self.info['imu_acce_scale']) * (acce_uncalib - np.array(self.info['imu_acce_bias']))
             ts = np.copy(f['synced/time'])
             tango_pos = np.copy(f['pose/tango_pos'])
+            tango_ori = np.copy(f['pose/tango_ori'])
             init_tango_ori = quaternion.quaternion(*f['pose/tango_ori'][0])
 
         # Compute the IMU orientation in the Tango coordinate frame.
@@ -79,8 +80,7 @@ class GlobSpeedSequence(CompiledSequence):
         #self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
         self.features = np.concatenate([magn], axis=1)[start_frame:]
         #self.targets = glob_v[start_frame:, :2]
-        y = quaternion.as_float_array(ori_q)
-        self.targets = y[start_frame:]
+        self.targets = tango_ori[start_frame:]
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
 
