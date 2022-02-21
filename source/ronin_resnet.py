@@ -66,7 +66,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
 
     random_shift, shuffle, transforms, grv_only = 0, False, None, False
     if mode == 'train':
-        random_shift = args.step_size // 2
+        #random_shift = args.step_size // 2
         shuffle = True
         transforms = RandomHoriRotate(math.pi * 2)
     elif mode == 'val':
