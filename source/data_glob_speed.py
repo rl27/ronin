@@ -74,13 +74,13 @@ class GlobSpeedSequence(CompiledSequence):
         #glob_magn = quaternion.as_float_array(ori_q * magn_q * ori_q.conj())[:, 1:]
 
         start_frame = self.info.get('start_frame', 0)
-        self.ts = ts[start_frame:-self.w]
+        self.ts = ts[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce, glob_magn], axis=1)[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
         self.features = np.concatenate([magn], axis=1)[start_frame:]
         #self.targets = glob_v[start_frame:, :2]
-        self.targets = tango_ori[start_frame:]
+        self.targets = tango_ori[start_frame:-self.w]
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
 
