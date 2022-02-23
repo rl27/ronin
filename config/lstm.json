@@ -11,5 +11,5 @@
   "layer_size": 100, "layers":3,
   "device": "cuda:0",
   "dataset": "ronin",
-  "dropout": 0.8
+  "kwargs": {"dropout": 0.2, "max_ori_error": 20, "use_scheduler": true}
 }
