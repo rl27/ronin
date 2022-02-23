@@ -28,7 +28,7 @@ Configurations
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 _nano_to_sec = 1e09
-_input_channel, _output_channel = 6, 2
+_input_channel, _output_channel = 9, 4
 device = 'cpu'
 
 
