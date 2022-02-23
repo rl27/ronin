@@ -16,8 +16,8 @@ class GlobSpeedSequence(CompiledSequence):
     Dataset :- RoNIN (can be downloaded from http://ronin.cs.sfu.ca/)
     Features :- raw angular rate and acceleration (includes gravity).
     """
-    feature_dim = 9
-    target_dim = 4
+    feature_dim = 6
+    target_dim = 2
     aux_dim = 8
 
     def __init__(self, data_path=None, **kwargs):
@@ -66,19 +66,17 @@ class GlobSpeedSequence(CompiledSequence):
 
         gyro_q = quaternion.from_float_array(np.concatenate([np.zeros([gyro.shape[0], 1]), gyro], axis=1))
         acce_q = quaternion.from_float_array(np.concatenate([np.zeros([acce.shape[0], 1]), acce], axis=1))
-        #magn_q = quaternion.from_float_array(np.concatenate([np.zeros([magn.shape[0], 1]), magn], axis=1))
         glob_gyro = quaternion.as_float_array(ori_q * gyro_q * ori_q.conj())[:, 1:]
         glob_acce = quaternion.as_float_array(ori_q * acce_q * ori_q.conj())[:, 1:]
         #glob_acce[:,2] -= np.linalg.norm(acce[0]) # Subtract gravity
         glob_acce[:,2] -= 9.807 # Subtract gravity
-        #glob_magn = quaternion.as_float_array(ori_q * magn_q * ori_q.conj())[:, 1:]
 
         start_frame = self.info.get('start_frame', 0)
         self.ts = ts[start_frame:]
-        self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
-        #self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
-        #self.targets = glob_v[start_frame:, :2]
-        self.targets = tango_ori[start_frame:-self.w]
+        #self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
+        self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
+        self.targets = glob_v[start_frame:, :2]
+        #self.targets = tango_ori[start_frame:-self.w]
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
 

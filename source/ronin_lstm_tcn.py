@@ -28,7 +28,7 @@ Configurations
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 _nano_to_sec = 1e09
-_input_channel, _output_channel = 9, 4
+_input_channel, _output_channel = 6, 2
 device = 'cpu'
 
 
@@ -93,7 +93,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
         from data_ridi import RIDIGlobSpeedSequence
         seq_type = RIDIGlobSpeedSequence
     dataset = SequenceToSequenceDataset(seq_type, root_dir, data_list, args.cache_path, args.step_size, args.window_size,
-                                        random_shift=random_shift, transform=None, shuffle=shuffle,
+                                        random_shift=random_shift, transform=transforms, shuffle=shuffle,
                                         grv_only=grv_only, **kwargs)
 
     return dataset
@@ -135,8 +135,8 @@ def get_loss_function(history, args, **kwargs):
     else:
         config = {'mode': 'full'}
 
-    #criterion = GlobalPosLoss(**config)
-    criterion = torch.nn.MSELoss()
+    criterion = GlobalPosLoss(**config)
+    #criterion = torch.nn.MSELoss()
     return criterion
 
 
