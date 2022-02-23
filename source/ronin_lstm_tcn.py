@@ -93,7 +93,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
         from data_ridi import RIDIGlobSpeedSequence
         seq_type = RIDIGlobSpeedSequence
     dataset = SequenceToSequenceDataset(seq_type, root_dir, data_list, args.cache_path, args.step_size, args.window_size,
-                                        random_shift=random_shift, transform=transforms, shuffle=shuffle,
+                                        random_shift=random_shift, transform=None, shuffle=shuffle,
                                         grv_only=grv_only, **kwargs)
 
     return dataset
