@@ -135,7 +135,8 @@ def get_loss_function(history, args, **kwargs):
     else:
         config = {'mode': 'full'}
 
-    criterion = GlobalPosLoss(**config)
+    #criterion = GlobalPosLoss(**config)
+    criterion = torch.nn.MSELoss()
     return criterion
 
 
