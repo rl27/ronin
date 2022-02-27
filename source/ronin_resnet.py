@@ -93,7 +93,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
 def get_dataset_from_list(root_dir, list_path, args, **kwargs):
     with open(list_path) as f:
         data_list = [s.strip().split(',' or ' ')[0] for s in f.readlines() if len(s) > 0 and s[0] != '#']
-    return get_dataset(root_dir, data_list, args, **kwargs)
+    return get_dataset(root_dir, data_list, args, **kwargs, feature_sigma=args.feature_sigma, target_sigma=args.target_sigma)
 
 
 def train(args, **kwargs):
