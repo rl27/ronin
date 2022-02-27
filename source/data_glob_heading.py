@@ -34,7 +34,7 @@ class HeadingSequence(GlobSpeedSequence):
             body_ori_q = quaternion.from_float_array(tango_ori) * quaternion.from_float_array(rot_tango_to_body).conj()
             body_heading = orientation_to_angles(body_ori_q)[start_frame:, 0]
         # self.targets = np.stack([np.sin(body_heading), np.cos(body_heading)], axis=-1)
-        self.targets = body_heading
+        self.targets = np.stack([body_heading], axis=-1)
 
     def get_feature(self):
         return self.features
