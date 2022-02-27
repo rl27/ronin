@@ -10,4 +10,5 @@
   "file": "heading_models",
   "layer_size": 100, "layers":3,
   "device": "cuda:0",
+  "kwargs": {"use_scheduler": true}
 }
