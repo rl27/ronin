@@ -25,14 +25,14 @@ class GlobSpeedSequence(CompiledSequence):
         self.ts, self.features, self.targets, self.orientations, self.gt_pos = None, None, None, None, None
         self.info = {}
 
+        self.feat_sigma = kwargs.get('feature_sigma,', -1)
+        self.targ_sigma = kwargs.get('target_sigma,', -1)
+
         self.grv_only = kwargs.get('grv_only', False)
         self.max_ori_error = kwargs.get('max_ori_error', 20.0)
         self.w = kwargs.get('interval', 1)
         if data_path is not None:
             self.load(data_path)
-        
-        self.feat_sigma = kwargs.get('feature_sigma,', -1)
-        self.targ_sigma = kwargs.get('target_sigma,', -1)
 
     def load(self, data_path):
         if data_path[-1] == '/':
