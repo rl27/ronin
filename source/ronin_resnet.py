@@ -413,10 +413,13 @@ if __name__ == '__main__':
     parser.add_argument('--continue_from', type=str, default=None)
     parser.add_argument('--out_dir', type=str, default=None)
     parser.add_argument('--model_path', type=str, default=None)
-    parser.add_argument('--feature_sigma', type=float, default=0.00001)
-    parser.add_argument('--target_sigma', type=float, default=0.00001)
+    parser.add_argument('--feature_sigma', type=float, default=0.0)
+    parser.add_argument('--target_sigma', type=float, default=0.0)
 
     args = parser.parse_args()
+
+    print("feature sigma:", args.feature_sigma)
+    print("target sigma:", args.target_sigma)
 
     np.set_printoptions(formatter={'all': lambda x: '{:.6f}'.format(x)})
 

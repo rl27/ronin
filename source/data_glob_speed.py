@@ -30,6 +30,9 @@ class GlobSpeedSequence(CompiledSequence):
         self.w = kwargs.get('interval', 1)
         if data_path is not None:
             self.load(data_path)
+        
+        self.feat_sigma = kwargs.get('feature_sigma,', -1)
+        self.targ_sigma = kwargs.get('target_sigma,', -1)
 
     def load(self, data_path):
         if data_path[-1] == '/':
@@ -71,14 +74,20 @@ class GlobSpeedSequence(CompiledSequence):
         #glob_acce[:,2] -= np.linalg.norm(acce[0]) # Subtract gravity
         glob_acce[:,2] -= 9.807 # Subtract gravity
 
-        # plot - 512hz cutoff freq?
-
         start_frame = self.info.get('start_frame', 0)
         self.ts = ts[start_frame:]
-        #self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
+
         self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
+        # Smooth the features
+        if self.feat_sigma > 0:
+            self.features = gaussian_filter1d(self.features, sigma=self.feat_sigma, axis=0)
+
         self.targets = glob_v[start_frame:, :2]
         #self.targets = tango_ori[start_frame:-self.w]
+        # Smooth the targets
+        if self.targ_sigma > 0:
+            self.targets = gaussian_filter1d(self.targets, sigma=self.targ_sigma, axis=0)
+
         self.orientations = quaternion.as_float_array(ori_q)[start_frame:]
         self.gt_pos = tango_pos[start_frame:]
 
