@@ -25,8 +25,8 @@ class GlobSpeedSequence(CompiledSequence):
         self.ts, self.features, self.targets, self.orientations, self.gt_pos = None, None, None, None, None
         self.info = {}
 
-        self.feat_sigma = kwargs.get('feature_sigma,', -1)
-        self.targ_sigma = kwargs.get('target_sigma,', -1)
+        self.feat_sigma = kwargs.get('feature_sigma', -1)
+        self.targ_sigma = kwargs.get('target_sigma', -1)
 
         self.grv_only = kwargs.get('grv_only', False)
         self.max_ori_error = kwargs.get('max_ori_error', 20.0)
