@@ -83,7 +83,8 @@ def get_dataset(root_dir, data_list, args, **kwargs):
     dataset = StridedSequenceDataset(
         seq_type, root_dir, data_list, args.cache_path, args.step_size, args.window_size,
         random_shift=random_shift, transform=transforms,
-        shuffle=shuffle, grv_only=grv_only, max_ori_error=args.max_ori_error)
+        shuffle=shuffle, grv_only=grv_only, max_ori_error=args.max_ori_error,
+        feature_sigma=args.feature_sigma, target_sigma=args.target_sigma)
 
     global _input_channel, _output_channel
     _input_channel, _output_channel = dataset.feature_dim, dataset.target_dim
@@ -93,7 +94,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
 def get_dataset_from_list(root_dir, list_path, args, **kwargs):
     with open(list_path) as f:
         data_list = [s.strip().split(',' or ' ')[0] for s in f.readlines() if len(s) > 0 and s[0] != '#']
-    return get_dataset(root_dir, data_list, args, **kwargs, feature_sigma=args.feature_sigma, target_sigma=args.target_sigma)
+    return get_dataset(root_dir, data_list, args, **kwargs)
 
 
 def train(args, **kwargs):
