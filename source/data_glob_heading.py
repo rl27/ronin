@@ -15,7 +15,7 @@ from data_utils import load_cached_sequences
 
 
 class HeadingSequence(GlobSpeedSequence):
-    target_dim = 2
+    target_dim = 1
     aux_dim = 2     # velocity
 
     def __init__(self, data_path=None, **kwargs):
@@ -33,7 +33,8 @@ class HeadingSequence(GlobSpeedSequence):
             tango_ori = f['pose/tango_ori']
             body_ori_q = quaternion.from_float_array(tango_ori) * quaternion.from_float_array(rot_tango_to_body).conj()
             body_heading = orientation_to_angles(body_ori_q)[start_frame:, 0]
-        self.targets = np.stack([np.sin(body_heading), np.cos(body_heading)], axis=-1)
+        # self.targets = np.stack([np.sin(body_heading), np.cos(body_heading)], axis=-1)
+        self.targets = body_heading
 
     def get_feature(self):
         return self.features

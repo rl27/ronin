@@ -20,13 +20,13 @@ from math_util import adjust_angle_array
 from utils import load_config
 
 torch.multiprocessing.set_sharing_strategy('file_system')
-_input_channel, _output_channel = 6, 2
+_input_channel, _output_channel = 6, 1
 _device = 'cpu'
 _min_moving_speed = 0.1
 
 
 class HeadingNetwork(torch.nn.Module):
-    def __init__(self, network, heading_dim=2, pre_norm=False, separate=True, get_prediction=False, weight=None):
+    def __init__(self, network, heading_dim=1, pre_norm=False, separate=True, get_prediction=False, weight=None):
         """
         Calculate heading angle with/out loss.
         The heading angle is absolute heading from the point person starts moving
@@ -179,7 +179,7 @@ def get_model(args, mode='train', **kwargs):
     network = LSTMSeqNetwork(_input_channel, _output_channel, args.batch_size, _device, lstm_layers=args.layers, lstm_size=args.layer_size,
                              **config).to(_device)
 
-    model = HeadingNetwork(network, heading_dim=2, pre_norm=kwargs.get('heading_norm', False), separate=kwargs.get('separate_loss', False),
+    model = HeadingNetwork(network, heading_dim=1, pre_norm=kwargs.get('heading_norm', False), separate=kwargs.get('separate_loss', False),
                            get_prediction=(mode != 'train'), weight=kwargs.get('weights'))
 
     pytorch_total_params = sum(p.numel() for p in network.parameters() if p.requires_grad)
