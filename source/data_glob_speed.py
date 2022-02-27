@@ -71,6 +71,8 @@ class GlobSpeedSequence(CompiledSequence):
         #glob_acce[:,2] -= np.linalg.norm(acce[0]) # Subtract gravity
         glob_acce[:,2] -= 9.807 # Subtract gravity
 
+        # plot - 512hz cutoff freq?
+
         start_frame = self.info.get('start_frame', 0)
         self.ts = ts[start_frame:]
         #self.features = np.concatenate([glob_gyro, glob_acce, magn], axis=1)[start_frame:]
