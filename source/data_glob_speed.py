@@ -8,7 +8,7 @@ import quaternion
 from scipy.ndimage import gaussian_filter1d
 from torch.utils.data import Dataset
 
-from data_utils import CompiledSequence, select_orientation_source, load_cached_sequences
+from data_utils import CompiledSequence, select_orientation_source, load_cached_sequences, butter_lowpass_filter
 
 
 class GlobSpeedSequence(CompiledSequence):
@@ -81,6 +81,14 @@ class GlobSpeedSequence(CompiledSequence):
         # Smooth the features
         if self.feat_sigma > 0:
             self.features = gaussian_filter1d(self.features, sigma=self.feat_sigma, axis=0)
+        
+        '''
+        # Smooth using Butterworth (NEEDS TESTING)
+        order = 6
+        fs = 30.0
+        cutoff = 3.667
+        self.features = butter_lowpass_filter(self.features, cutoff, fs, order)
+        '''
 
         self.targets = glob_v[start_frame:, :2]
         #self.targets = tango_ori[start_frame:-self.w]
