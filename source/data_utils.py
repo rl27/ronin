@@ -15,6 +15,7 @@ from scipy.signal import butter, filtfilt
 from math_util import gyro_integration
 
 # Low pass Butterworth filter
+# https://gist.github.com/junzis/e06eca03747fc194e322
 def butter_lowpass(cutoff=3.667, fs=30.0, order=6):
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq

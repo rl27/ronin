@@ -27,6 +27,7 @@ class GlobSpeedSequence(CompiledSequence):
 
         self.feat_sigma = kwargs.get('feature_sigma', -1)
         self.targ_sigma = kwargs.get('target_sigma', -1)
+        self.butter = kwargs.get('butter', False)
 
         self.grv_only = kwargs.get('grv_only', False)
         self.max_ori_error = kwargs.get('max_ori_error', 20.0)
@@ -78,17 +79,19 @@ class GlobSpeedSequence(CompiledSequence):
         self.ts = ts[start_frame:]
 
         self.features = np.concatenate([glob_gyro, glob_acce], axis=1)[start_frame:]
-        # Smooth the features
+
+        # Smooth using gaussian_filter1d
         if self.feat_sigma > 0:
             self.features = gaussian_filter1d(self.features, sigma=self.feat_sigma, axis=0)
         
-        '''
-        # Smooth using Butterworth (NEEDS TESTING)
-        order = 6
-        fs = 30.0
-        cutoff = 3.667
-        self.features = butter_lowpass_filter(self.features, cutoff, fs, order)
-        '''
+        # Smooth using Butterworth
+        elif self.butter:
+            order = 6
+            fs = 30.0
+            cutoff = 3.667
+            for i in range(len(self.features[0])):
+                self.features[:,i] = butter_lowpass_filter(self.features[:,i], cutoff, fs, order)
+        
 
         self.targets = glob_v[start_frame:, :2]
         #self.targets = tango_ori[start_frame:-self.w]

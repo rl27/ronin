@@ -84,7 +84,7 @@ def get_dataset(root_dir, data_list, args, **kwargs):
         seq_type, root_dir, data_list, args.cache_path, args.step_size, args.window_size,
         random_shift=random_shift, transform=transforms,
         shuffle=shuffle, grv_only=grv_only, max_ori_error=args.max_ori_error,
-        feature_sigma=args.feature_sigma, target_sigma=args.target_sigma)
+        feature_sigma=args.feature_sigma, target_sigma=args.target_sigma, butter=args.butter)
 
     global _input_channel, _output_channel
     _input_channel, _output_channel = dataset.feature_dim, dataset.target_dim
@@ -416,6 +416,7 @@ if __name__ == '__main__':
     parser.add_argument('--model_path', type=str, default=None)
     parser.add_argument('--feature_sigma', type=float, default=0.0)
     parser.add_argument('--target_sigma', type=float, default=0.0)
+    parser.add_argument('--butter', action='store_true')
 
     args = parser.parse_args()
 
