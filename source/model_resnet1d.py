@@ -157,8 +157,8 @@ class ResNet1D(nn.Module):
         # Input module
         self.input_block = nn.Sequential(
             nn.Conv1d(num_inputs, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False),
-            nn.BatchNorm1d(self.inplanes),
             nn.ReLU(inplace=True),
+            nn.BatchNorm1d(self.inplanes),
             nn.MaxPool1d(kernel_size=3, stride=2, padding=1)
         )
 
