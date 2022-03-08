@@ -138,7 +138,7 @@ def train(args, **kwargs):
     #optimizer = torch.optim.Adam(network.parameters(), args.lr)
     #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True, eps=1e-12)
     optimizer = optim.Lamb(network.parameters(), args.lr)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100, eta_min=5e-6, verbose=True)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=120, eta_min=1e-5, verbose=True)
 
     start_epoch = 0
     if args.continue_from is not None and osp.exists(args.continue_from):
