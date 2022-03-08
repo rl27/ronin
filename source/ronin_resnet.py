@@ -15,6 +15,7 @@ from data_glob_speed import *
 from transformations import *
 from metric import compute_ate_rte
 from model_resnet1d import *
+import torch_optimizer as optim
 
 _input_channel, _output_channel = 6, 2
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
@@ -136,7 +137,7 @@ def train(args, **kwargs):
     criterion = torch.nn.MSELoss()
     #optimizer = torch.optim.Adam(network.parameters(), args.lr)
     #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True, eps=1e-12)
-    optimizer = torch.optim.Lamb(network.parameters(), args.lr)
+    optimizer = optim.Lamb(network.parameters(), args.lr)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100, verbose=True)
 
     start_epoch = 0
