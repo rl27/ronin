@@ -212,7 +212,7 @@ def train(args, **kwargs):
                 val_losses = np.average((val_outs - val_targets) ** 2, axis=0)
                 avg_loss = np.average(val_losses)
                 print('Validation loss: {}/{:.6f}'.format(val_losses, avg_loss))
-                scheduler.step(avg_loss)
+                scheduler.step()
                 if summary_writer is not None:
                     add_summary(summary_writer, val_losses, epoch + 1, 'val')
                 val_losses_all.append(avg_loss)
