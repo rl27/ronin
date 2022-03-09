@@ -135,10 +135,7 @@ def train(args, **kwargs):
     print('Total number of parameters: ', total_params)
 
     criterion = torch.nn.MSELoss()
-    #optimizer = torch.optim.Adam(network.parameters(), args.lr)
-    #scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True, eps=1e-12)
-    optimizer = optim.Lamb(network.parameters(), args.lr)
-    #scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=120, eta_min=1e-5, verbose=True)
+    optimizer = torch.optim.Adam(network.parameters(), args.lr)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, patience=10, verbose=True, eps=1e-12)
 
     start_epoch = 0
