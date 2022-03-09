@@ -15,7 +15,7 @@ from data_glob_speed import *
 from transformations import *
 from metric import compute_ate_rte
 from model_resnet1d import *
-import torch_optimizer as optim
+#import torch_optimizer as optim
 
 _input_channel, _output_channel = 6, 2
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
