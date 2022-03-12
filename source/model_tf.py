@@ -7,6 +7,8 @@ import torch.nn.functional as F
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.utils.data import dataset
 
+# https://pytorch.org/tutorials/beginner/transformer_tutorial.html
+
 class PositionalEncoding(nn.Module):
 
     def __init__(self, d_model: int, dropout: float = 0.1, max_len: int = 5000):

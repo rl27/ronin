@@ -29,6 +29,7 @@ def get_model(args, **kwargs):
         dropout = kwargs.get('dropout')
 
     '''
+    # https://pytorch.org/tutorials/beginner/transformer_tutorial.html
     ntokens = len(vocab)  # size of vocabulary
     emsize = 200  # embedding dimension
     d_hid = 200  # dimension of the feedforward network model in nn.TransformerEncoder
@@ -38,7 +39,10 @@ def get_model(args, **kwargs):
     network = TransformerNetwork(ntokens, emsize, nhead, d_hid, nlayers, dropout).to(device)
     print('Network constructed.')
     '''
+
+    # https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html
     network = nn.Transformer(dropout=0.2).to(device)
+    return network
 
 
 def run_test(network, data_loader, device, eval_mode=True):
