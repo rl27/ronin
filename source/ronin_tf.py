@@ -33,7 +33,7 @@ def get_model(args, **kwargs):
     nlayers = 2  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
     nhead = 2  # number of heads in nn.MultiheadAttention
     dropout = 0.2  # dropout probability
-    network = TransformerNetwork(d_model=_input_channel, d_output=_output_channel, nhead, d_hid, nlayers, dropout)
+    network = TransformerNetwork(d_model=_input_channel, d_output=_output_channel, nhead=nhead, d_hid=d_hid, nlayers=nlayers, dropout=dropout)
     print('Network constructed.')
     
 
