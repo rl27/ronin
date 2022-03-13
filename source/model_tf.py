@@ -33,7 +33,7 @@ class PositionalEncoding(nn.Module):
 
 class TransformerNetwork(nn.Module):
 
-    def __init__(self, d_model: int, d_output: int, nhead: int, d_hid: int,
+    def __init__(self, d_model: int, nhead: int, d_hid: int,
                  nlayers: int, dropout: float = 0.5):
         super().__init__()
         self.model_type = 'Transformer'
@@ -50,7 +50,7 @@ class TransformerNetwork(nn.Module):
             dropout=dropout,
         )
 
-        self.decoder = nn.Linear(d_model, d_output)
+        self.decoder = nn.Linear(d_model, d_model)
 
         self.init_weights()
 

@@ -1,0 +1,15 @@
+{"batch_size": 72,
+  "epochs": 100,
+  "save_interval": 10,
+  "step_size": 100,
+  "lr": 0.0003,
+  "num_workers": 1,
+  "window_size": 400,
+  "feature_sigma": 0.0,
+  "target_sigma": 0.0,
+  "file": "lstm",
+  "layer_size": 100, "layers":3,
+  "device": "cuda:0",
+  "dataset": "ronin",
+  "kwargs": {"dropout": 0.2, "max_ori_error": 20, "use_scheduler": true}
+}
