@@ -18,7 +18,6 @@ from model_resnet1d import *
 #import torch_optimizer as optim
 
 #from model_tf import TransformerNetwork
-from torch import nn
 
 _input_channel, _output_channel = 6, 2
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
@@ -42,7 +41,7 @@ def get_model(args, **kwargs):
     '''
 
     # https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html
-    network = nn.Transformer(dropout=0.2)
+    network = torch.nn.Transformer(dropout=0.2)
     return network
 
 
@@ -52,7 +51,7 @@ def run_test(network, data_loader, device, eval_mode=True):
     if eval_mode:
         network.eval()
     for bid, (feat, targ, _, _) in enumerate(data_loader):
-        pred = network(feat.to(device)).cpu().detach().numpy()
+        pred = network(feat.to(device), targ.to(device)).cpu().detach().numpy()
         targets_all.append(targ.detach().numpy())
         preds_all.append(pred)
     targets_all = np.concatenate(targets_all, axis=0)
@@ -189,7 +188,7 @@ def train(args, **kwargs):
             for batch_id, (feat, targ, _, _) in enumerate(train_loader):
                 feat, targ = feat.to(device), targ.to(device)
                 optimizer.zero_grad()
-                pred = network(feat)
+                pred = network(feat, targ)
                 train_outs.append(pred.cpu().detach().numpy())
                 train_targets.append(targ.cpu().detach().numpy())
                 loss = criterion(pred, targ)
