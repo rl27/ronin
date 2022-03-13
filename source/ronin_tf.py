@@ -17,7 +17,7 @@ from metric import compute_ate_rte
 from model_resnet1d import *
 #import torch_optimizer as optim
 
-#from model_tf import TransformerNetwork
+from model_tf import TransformerNetwork
 
 _input_channel, _output_channel = 6, 2
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
@@ -28,20 +28,18 @@ def get_model(args, **kwargs):
     if kwargs.get('dropout'):
         dropout = kwargs.get('dropout')
 
-    '''
-    # https://pytorch.org/tutorials/beginner/transformer_tutorial.html
-    ntokens = len(vocab)  # size of vocabulary
-    emsize = 200  # embedding dimension
-    d_hid = 200  # dimension of the feedforward network model in nn.TransformerEncoder
+    
+    d_hid = 512  # dimension of the feedforward network model in nn.TransformerEncoder
     nlayers = 2  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
     nhead = 2  # number of heads in nn.MultiheadAttention
     dropout = 0.2  # dropout probability
-    network = TransformerNetwork(ntokens, emsize, nhead, d_hid, nlayers, dropout).to(device)
+    network = TransformerNetwork(d_model=_input_channel, d_output=_output_channel, nhead, d_hid, nlayers, dropout)
     print('Network constructed.')
-    '''
+    
 
     # https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html
-    network = torch.nn.Transformer(d_model=_input_channel, nhead=_output_channel, dim_feedforward=512, dropout=0.2)
+    # network = torch.nn.Transformer(dim_feedforward=512, dropout=0.2)
+
     return network
 
 

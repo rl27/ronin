@@ -8,6 +8,7 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.utils.data import dataset
 
 # https://pytorch.org/tutorials/beginner/transformer_tutorial.html
+# https://towardsdatascience.com/a-detailed-guide-to-pytorchs-nn-transformer-module-c80afbc9ffb1
 
 class PositionalEncoding(nn.Module):
 
@@ -32,36 +33,43 @@ class PositionalEncoding(nn.Module):
 
 class TransformerNetwork(nn.Module):
 
-    def __init__(self, ntoken: int, d_model: int, nhead: int, d_hid: int,
+    def __init__(self, d_model: int, d_output: int, nhead: int, d_hid: int,
                  nlayers: int, dropout: float = 0.5):
         super().__init__()
         self.model_type = 'Transformer'
         self.pos_encoder = PositionalEncoding(d_model, dropout)
-        encoder_layers = TransformerEncoderLayer(d_model, nhead, d_hid, dropout)
-        self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
-        self.encoder = nn.Embedding(ntoken, d_model)
-        self.d_model = d_model
-        self.decoder = nn.Linear(d_model, ntoken)
+        
+        #encoder_layers = TransformerEncoderLayer(d_model, nhead, d_hid, dropout)
+        #self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
+        self.transformer = nn.Transformer(
+            d_model=d_model,
+            nhead=nhead,
+            num_encoder_layers=nlayers,
+            num_decoder_layers=nlayers,
+            dim_feedforward=d_hid,
+            dropout=dropout,
+        )
+
+        self.decoder = nn.Linear(d_model, d_output)
 
         self.init_weights()
 
     def init_weights(self) -> None:
         initrange = 0.1
-        self.encoder.weight.data.uniform_(-initrange, initrange)
+        #self.encoder.weight.data.uniform_(-initrange, initrange)
         self.decoder.bias.data.zero_()
         self.decoder.weight.data.uniform_(-initrange, initrange)
 
-    def forward(self, src: Tensor, src_mask: Tensor) -> Tensor:
+    def forward(self, src: Tensor, tgt: Tensor) -> Tensor:
         """
         Args:
-            src: Tensor, shape [seq_len, batch_size]
-            src_mask: Tensor, shape [seq_len, seq_len]
-
-        Returns:
-            output Tensor of shape [seq_len, batch_size, ntoken]
+            src: Tensor, shape [src_seq_len, batch_size]
+            tgt: Tensor, shape [tgt_seq_len, batch_size]
         """
-        src = self.encoder(src) * math.sqrt(self.d_model)
+        #src = self.encoder(src) * math.sqrt(self.d_model)
+        #tgt = self.encoder(src) * math.sqrt(self.d_model)
         src = self.pos_encoder(src)
-        output = self.transformer_encoder(src, src_mask)
+        tgt = self.pos_encoder(tgt)
+        output = self.transformer(src, tgt)
         output = self.decoder(output)
         return output
