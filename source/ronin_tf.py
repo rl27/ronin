@@ -41,7 +41,7 @@ def get_model(args, **kwargs):
     '''
 
     # https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html
-    network = torch.nn.Transformer(dropout=0.2)
+    network = torch.nn.Transformer(d_model=_input_channel, nhead=_output_channel, dim_feedforward=512, dropout=0.2)
     return network
 
 
