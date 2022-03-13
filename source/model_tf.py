@@ -48,6 +48,7 @@ class TransformerNetwork(nn.Module):
             num_decoder_layers=nlayers,
             dim_feedforward=d_hid,
             dropout=dropout,
+            batch_first=True
         )
 
         self.decoder = nn.Linear(d_model, d_model)
