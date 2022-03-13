@@ -238,7 +238,7 @@ def train(args, **kwargs):
                 feat, targ, _, _ = batch
                 feat, targ = feat.to(device), targ.to(device)
                 optimizer.zero_grad()
-                predicted = network(feat)
+                predicted = network(feat, targ)
                 train_vel.add(predicted.cpu().detach().numpy(), targ.cpu().detach().numpy())
                 loss = criterion(predicted, targ)
                 train_loss += loss.cpu().detach().numpy()

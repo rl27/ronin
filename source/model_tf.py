@@ -68,8 +68,10 @@ class TransformerNetwork(nn.Module):
         """
         #src = self.encoder(src) * math.sqrt(self.d_model)
         #tgt = self.encoder(src) * math.sqrt(self.d_model)
+        src = src.permute(0, 2, 1)
+        tgt = tgt.permute(0, 2, 1)
         src = self.pos_encoder(src)
         tgt = self.pos_encoder(tgt)
         output = self.transformer(src, tgt)
         output = self.decoder(output)
-        return output
+        return output.permute(0, 2, 1)
