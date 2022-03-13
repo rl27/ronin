@@ -6,6 +6,7 @@ from torch import nn, Tensor
 import torch.nn.functional as F
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.utils.data import dataset
+import numpy as np
 
 # https://pytorch.org/tutorials/beginner/transformer_tutorial.html
 # https://towardsdatascience.com/a-detailed-guide-to-pytorchs-nn-transformer-module-c80afbc9ffb1
@@ -69,6 +70,9 @@ class TransformerNetwork(nn.Module):
         """
         #src = self.encoder(src) * math.sqrt(self.d_model)
         #tgt = self.encoder(src) * math.sqrt(self.d_model)
+
+        if isinstance(tgt, np.ndarray):
+            tgt = torch.from_numpy(tgt)
         src = src.permute(0, 2, 1)
         tgt = tgt.permute(0, 2, 1)
         src = self.pos_encoder(src)
