@@ -138,7 +138,7 @@ def train(args, **kwargs):
     print('Number of train samples: {}'.format(len(train_dataset)))
     if val_dataset:
         print('Number of val samples: {}'.format(len(val_dataset)))
-    total_params = network.get_num_params()
+    total_params = sum(p.numel() for p in network.parameters() if p.requires_grad)
     print('Total number of parameters: ', total_params)
 
     criterion = torch.nn.MSELoss()
