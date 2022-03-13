@@ -264,7 +264,7 @@ def train(args, **kwargs):
                     feat, targ, _, _ = batch
                     feat, targ = feat.to(device), targ.to(device)
                     optimizer.zero_grad()
-                    pred = network(feat)
+                    pred = network(feat, targ)
                     val_vel.add(pred.cpu().detach().numpy(), targ.cpu().detach().numpy())
                     val_loss += criterion(pred, targ).cpu().detach().numpy()
                 val_loss = val_loss / val_mini_batches
@@ -385,7 +385,7 @@ def test(args, **kwargs):
 
         feat, vel = seq_dataset.get_test_seq(idx)
         feat = torch.Tensor(feat).to(device)
-        preds = np.squeeze(network(feat).cpu().detach().numpy())[-vel.shape[0]:, :_output_channel]
+        preds = np.squeeze(network(feat, vel).cpu().detach().numpy())[-vel.shape[0]:, :_output_channel]
 
         ind = np.arange(vel.shape[0])
         vel_losses = np.mean((vel - preds) ** 2, axis=0)
