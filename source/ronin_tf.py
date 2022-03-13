@@ -18,6 +18,7 @@ from model_resnet1d import *
 #import torch_optimizer as optim
 
 #from model_tf import TransformerNetwork
+from torch import nn
 
 _input_channel, _output_channel = 6, 2
 _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
@@ -41,7 +42,7 @@ def get_model(args, **kwargs):
     '''
 
     # https://pytorch.org/docs/stable/generated/torch.nn.Transformer.html
-    network = nn.Transformer(dropout=0.2).to(device)
+    network = nn.Transformer(dropout=0.2)
     return network
 
 
