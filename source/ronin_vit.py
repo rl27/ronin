@@ -36,7 +36,7 @@ def get_model(args, **kwargs):
         depth = 6,
         heads = 16,
         mlp_dim = 1024,
-        dropout = 0.1,
+        dropout = dropout,
         emb_dropout = 0.1
     )
     
