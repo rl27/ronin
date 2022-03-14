@@ -72,7 +72,7 @@ class TransformerNetwork(nn.Module):
         #tgt = self.encoder(src) * math.sqrt(self.d_model)
 
         if isinstance(tgt, np.ndarray):
-            tgt = torch.from_numpy(tgt)
+            tgt = torch.unsqueeze(torch.from_numpy(tgt), 0)
         src = src.permute(0, 2, 1)
         tgt = tgt.permute(0, 2, 1)
         src = self.pos_encoder(src)
