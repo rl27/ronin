@@ -24,7 +24,7 @@ _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
 
 
 def get_model(args, **kwargs):
-    dropout = 0.2
+    dropout = 0.1
     if kwargs.get('dropout'):
         dropout = kwargs.get('dropout')
 
