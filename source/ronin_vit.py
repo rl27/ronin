@@ -28,16 +28,15 @@ def get_model(args, **kwargs):
     if kwargs.get('dropout'):
         dropout = kwargs.get('dropout')
 
-    
     network = ViT(
-        image_size = 200,
-        patch_size = 10,
+        image_size = 6,
+        patch_size = 1,
         num_classes = 2,
-        dim = 6,
+        dim = 200,
         depth = 6,
         heads = 16,
         mlp_dim = 1024,
-        dropout = dropout,
+        dropout = 0.1,
         emb_dropout = 0.1
     )
     
@@ -53,7 +52,6 @@ def run_test(network, data_loader, device, eval_mode=True):
     if eval_mode:
         network.eval()
     for bid, (feat, targ, _, _) in enumerate(data_loader):
-        feat = feat.permute(0, 2, 1)
         pred = network(feat.to(device)).cpu().detach().numpy()
         targets_all.append(targ.detach().numpy())
         preds_all.append(pred)
@@ -190,7 +188,6 @@ def train(args, **kwargs):
             train_outs, train_targets = [], []
             for batch_id, (feat, targ, _, _) in enumerate(train_loader):
                 feat, targ = feat.to(device), targ.to(device)
-                feat = feat.permute(0, 2, 1)
                 optimizer.zero_grad()
                 pred = network(feat)
                 train_outs.append(pred.cpu().detach().numpy())
