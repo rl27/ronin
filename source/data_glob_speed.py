@@ -88,7 +88,7 @@ class GlobSpeedSequence(CompiledSequence):
         elif self.butter:
             order = 6
             fs = 30.0
-            cutoff = 3.667 # 4, 4.333, 5
+            cutoff = 4 # 3.667, 4.333, 5
             for i in range(len(self.features[0])):
                 self.features[:,i] = butter_lowpass_filter(self.features[:,i], cutoff, fs, order)
         
