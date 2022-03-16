@@ -1,5 +1,52 @@
 import os
 import numpy as np
+import re
+
+# Returns 1 or 2, for train_dataset_1 or train_dataset_2
+def find_dataset(dirname, folder):
+    for item in os.listdir(dirname + "train_dataset_1"):
+        if item == folder:
+            return 1
+    for item in os.listdir(dirname + "train_dataset_2"):
+        if item == folder:
+            return 2
+    return 0
+
+# Generate train and val from train log
+def gen_from_log(dirname, logname):
+    f = open(logname, "r")
+    count = 0
+    train_str = []
+    train_ct = 0
+    val_str = []
+    val_ct = 0
+    train = True
+    for line in f:
+        if re.search("^a[0-9]{3}_[0-9]", line):
+            folder = line[:6]
+            d = find_dataset(dirname, folder)
+            if train:
+                train_str += "train_dataset_{}/{}\n".format(d, folder)
+                train_ct += 1
+            else:
+                val_str += "train_dataset_{}/{}\n".format(d, folder)
+                val_ct += 1
+            count += 1
+        elif re.search("^Training set loaded", line):
+            train = False
+
+    f = open("train_list.txt", "w")
+    f.write(train_str)
+    f.close()
+    f = open("val_list.txt", "w")
+    f.write(val_str)
+    f.close()
+    print("Train items:", train_ct)
+    print("Val items:", val_ct)
+    print("Total:", count)
+    
+
+gen_from_log("../dataset/", "test.txt")
 
 # Generate list
 def gen_list(dirname):
