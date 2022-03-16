@@ -44,9 +44,6 @@ def gen_from_log(dirname, logname):
     print("Train items:", train_ct)
     print("Val items:", val_ct)
     print("Total:", count)
-    
-
-gen_from_log("../dataset/", "test.txt")
 
 # Generate list
 def gen_list(dirname):
