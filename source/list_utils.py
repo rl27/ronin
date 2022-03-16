@@ -13,7 +13,7 @@ def find_dataset(dirname, folder):
     return 0
 
 # Generate train and val from train log
-def gen_from_log(dirname, logname):
+def gen_from_log(dirname, logname, dir2):
     f = open(logname, "r")
     count = 0
     train_str = ""
@@ -44,6 +44,16 @@ def gen_from_log(dirname, logname):
     print("Train items:", train_ct)
     print("Val items:", val_ct)
     print("Total:", count)
+
+    if not os.path.exists(dir2):
+        os.makedirs(dir2)
+    
+    f = open(dir2 + "/train_list.txt", "w")
+    f.write(train_str)
+    f.close()
+    f = open(dir2 + "/val_list.txt", "w")
+    f.write(val_str)
+    f.close()
 
 # Generate list
 def gen_list(dirname):
