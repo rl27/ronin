@@ -47,6 +47,9 @@ def gen_train_val(dirname, dir2):
     f.write(val_str)
     f.close()
     
+    if not os.path.exists(dir2):
+        os.makedirs(dir2)
+    
     f = open(dir2 + "/train_list.txt", "w")
     f.write(train_str)
     f.close()
