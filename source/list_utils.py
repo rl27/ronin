@@ -16,9 +16,9 @@ def find_dataset(dirname, folder):
 def gen_from_log(dirname, logname):
     f = open(logname, "r")
     count = 0
-    train_str = []
+    train_str = ""
     train_ct = 0
-    val_str = []
+    val_str = ""
     val_ct = 0
     train = True
     for line in f:
