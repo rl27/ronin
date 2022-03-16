@@ -23,7 +23,7 @@ def gen_train_list(dirname):
     f.close()
 
 # Generate train and val lists. 70/85 is train, 15/85 is val. Randomly selected.
-def gen_train_val(dirname):
+def gen_train_val(dirname, dir2):
     items = []
     for item in os.listdir(dirname + "train_dataset_1"):
         items.append("train_dataset_1/" + item + '\n')
@@ -44,5 +44,12 @@ def gen_train_val(dirname):
     f.write(train_str)
     f.close()
     f = open("val_list.txt", "w")
+    f.write(val_str)
+    f.close()
+    
+    f = open(dir2 + "/train_list.txt", "w")
+    f.write(train_str)
+    f.close()
+    f = open(dir2 + "/val_list.txt", "w")
     f.write(val_str)
     f.close()
