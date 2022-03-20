@@ -24,7 +24,7 @@ _fc_config = {'fc_dim': 512, 'in_dim': 7, 'dropout': 0.5, 'trans_planes': 128}
 
 
 def get_model(args, **kwargs):
-    dropout = 0.2
+    dropout = 0.5
     if kwargs.get('dropout'):
         dropout = kwargs.get('dropout')
 
@@ -36,8 +36,8 @@ def get_model(args, **kwargs):
         depth = 6,
         heads = 16,
         mlp_dim = 1024,
-        dropout = dropout,
-        emb_dropout = 0.2
+        dropout = dropout, # linear dropout
+        emb_dropout = 0.2 # conv dropout
     )
     
     pytorch_total_params = sum(p.numel() for p in network.parameters() if p.requires_grad)
