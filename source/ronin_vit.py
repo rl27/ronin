@@ -32,7 +32,7 @@ def get_model(args, **kwargs):
         image_size = -1,
         patch_size = 20,
         num_classes = 2,
-        dim = 25,
+        dim = 50,
         depth = 6,
         heads = 16,
         mlp_dim = 1024,
