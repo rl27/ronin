@@ -36,8 +36,8 @@ def get_model(args, **kwargs):
         depth = 6,
         heads = 16,
         mlp_dim = 1024,
-        dropout = 0.2, # linear dropout
-        emb_dropout = 0.2 # conv dropout
+        dropout = 0.5, # linear dropout
+        emb_dropout = 0.5 # conv dropout
     )
     
     pytorch_total_params = sum(p.numel() for p in network.parameters() if p.requires_grad)
