@@ -23,7 +23,7 @@ class BasicBlock1D(nn.Module):
         self.bn2 = nn.BatchNorm1d(out_planes)
         self.stride = stride
         self.downsample = downsample
-        self.weight = nn.Parameter(torch.randn(1))
+        self.weight = nn.Parameter(torch.full((1,), 0.5))
 
     def forward(self, x):
         residual = x
