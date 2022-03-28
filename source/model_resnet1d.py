@@ -38,6 +38,7 @@ class BasicBlock1D(nn.Module):
         if self.downsample is not None:
             residual = self.downsample(x)
 
+        self.weight = torch.clamp(self.weight, 0, 1)
         out = self.weight * out + (1-self.weight) * residual
         out = self.relu(out)
 
