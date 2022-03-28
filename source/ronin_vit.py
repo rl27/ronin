@@ -222,7 +222,7 @@ def train(args, **kwargs):
                     add_summary(summary_writer, val_losses, epoch + 1, 'val')
                 val_losses_all.append(avg_loss)
                 #if avg_loss < best_val_loss:
-                if (epoch + 1) % 2 == 0 or avg_loss < best_val_loss: # Save every two epochs
+                if (epoch + 1) % 4 == 0 or avg_loss < best_val_loss: # Save at least every 4 epochs
                     best_val_loss = avg_loss
                     if args.out_dir and osp.isdir(args.out_dir):
                         model_path = osp.join(args.out_dir, 'checkpoints', 'checkpoint_%d.pt' % epoch)
