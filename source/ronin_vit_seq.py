@@ -18,6 +18,8 @@ from data_glob_speed import GlobSpeedSequence, SequenceToSequenceDataset
 from transformations import ComposeTransform, RandomHoriRotateSeq
 from metric import compute_absolute_trajectory_error, compute_relative_trajectory_error
 
+from vit_pytorch.vit_seq import ViT
+
 '''
 Temporal models with loss functions in global coordinate frame
 Configurations
