@@ -24,7 +24,7 @@ class BasicBlock1D(nn.Module):
         self.stride = stride
         self.downsample = downsample
         #self.alpha = nn.Parameter(torch.full((1,), 0.0))
-        self.alpha = nn.Parameter(torch.zeros([1, out_planes, 1, 1]))
+        self.alpha = nn.Parameter(torch.zeros([1, out_planes, 1]))
 
     def forward(self, x):
         residual = x
