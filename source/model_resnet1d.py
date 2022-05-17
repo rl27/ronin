@@ -23,7 +23,8 @@ class BasicBlock1D(nn.Module):
         self.bn2 = nn.BatchNorm1d(out_planes)
         self.stride = stride
         self.downsample = downsample
-        self.alpha = nn.Parameter(torch.full((1,), 0.0))
+        #self.alpha = nn.Parameter(torch.full((1,), 0.0))
+        self.alpha = nn.Parameter(torch.zeros([1, out_planes, 1, 1]))
 
     def forward(self, x):
         residual = x
